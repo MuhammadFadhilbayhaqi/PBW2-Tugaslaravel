@@ -64,25 +64,7 @@ class CollectionController extends Controller
         return redirect()->route('koleksi');
         // return view('koleksi.infoKoleksi');
     }
-    // public function update(Request $request, Koleksi $koleksi) //controller buat edit
-    // {
-    // $request->validate([
-    //     'namaKoleksi' => 'required',
-    //     'jenisKoleksi' => 'required',
-    //     'jumlahKoleksi' => 'required',
-    // ]);
 
-    // // Perbarui data koleksi dengan data yang dikirimkan dari formulir
-
-    // $affacted = DB::table('koleksi')->where('id', $request->id)->update([
-    //     'namaKoleksi' => $request->namaKoleksi,
-    //     'jenisKoleksi' => $request->jenisKoleksi,   // Achmad Dani Saputra | 6706223131
-    //     'jumlahKoleksi' => $request->jumlahKoleksi,
-    // ]
-    // );
-    // // Redirect ke halaman yang sesuai, misalnya, halaman daftar koleksi
-    // return redirect()->route('koleksi.daftarKoleksi')->with('success', 'Koleksi berhasil diperbarui.');
-    // }
 
 
     /**

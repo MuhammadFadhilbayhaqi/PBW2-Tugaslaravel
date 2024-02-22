@@ -49,6 +49,38 @@ Route::get('/koleksiView/{collection}', [\App\Http\Controllers\CollectionControl
 Route::post('/koleksiUpdate', [\App\Http\Controllers\CollectionController::class, 'update'])->middleware(['auth', 'verified'])->name('koleksiUpdate');
 Route::post('/userUpdate', [\App\Http\Controllers\ProfileController::class, 'ganti'])->middleware(['auth', 'verified'])->name('userUpdate');
 
+// Nama    : Muhammad Fadhil Bayhaqi
+// Kelas   : D3IF 46-03
+// NIM     : 6706223102
+
+// Route untuk daftar transaksi
+Route::get('/transaksi', [\App\Http\Controllers\TransactionController::class, 'index'])->middleware(['auth', 'verified'])->name('transaksi');
+
+// Route untuk tambah transaksi
+Route::get('/transaksiTambah', [\App\Http\Controllers\TransactionController::class, 'create'])->middleware(['auth', 'verified'])->name('transaksiTambah');
+
+// Route untuk store transaksi
+Route::post('/transaksiStore', [\App\Http\Controllers\TransactionController::class, 'store'])->middleware(['auth', 'verified'])->name('transaksiStore');
+
+// Route untuk show transaksi
+Route::get('/transaksiView/{transaction}', [\App\Http\Controllers\TransactionController::class, 'show'])->middleware(['auth', 'verified'])->name('transaksiView');
+
+// Route untuk mendapat semua data detil transaksi
+Route::get('/getAllDetailTransactions/{transactionId}', [\App\Http\Controllers\DetailTransactionController::class, 'getAllDetailTransactions'])->middleware(['auth', 'verified']);
+
+// Route untuk edit detil transaksi
+Route::get('detailTransactionKembalikan/{detailTransactionId}', [\App\Http\Controllers\DetailTransactionController::class, 'detailTransactionKembalikan'])->middleware(['auth', 'verified'])->name('detailTransactionKembalikan');
+
+Route::post('detailTransactionUpdate', [\App\Http\Controllers\DetailTransactionController::class, 'update'])->middleware(['auth', 'verified'])->name('detailTransactionUpdate');
+
+Route::get('/getAllTransactions', [\App\Http\Controllers\TransactionController::class, 'getAllTransactions'])->middleware(['auth', 'verified']);
+
+
+
+
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

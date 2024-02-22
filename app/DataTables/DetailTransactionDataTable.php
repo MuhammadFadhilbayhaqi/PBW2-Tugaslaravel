@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Collection;
+use App\Models\DetailTransaction;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,8 +12,14 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CollectionsDataTable extends DataTable
+class DetailTransactionDataTable extends DataTable
 {
+    private $transactionId;
+
+    public function __construct($transactionId)
+    {
+        $this->transactionId = $transactionId;
+    }
     /**
      * Build the DataTable class.
      *
@@ -22,18 +28,16 @@ class CollectionsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->setRowId('id')
-            ->addColumn('action', function ($data) {
-                return $this->getActionColumn($data);
-            });
+            ->addColumn('action', 'detailtransaction.action')
+            ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Collection $model): QueryBuilder
+    public function query(DetailTransaction $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('transactionId', $this->transactionId);
     }
 
     /**
@@ -42,12 +46,20 @@ class CollectionsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('collections-table')
+                    ->setTableId('detailtransaction-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
                     ->orderBy(1)
-                    ->selectStyleSingle();
+                    ->selectStyleSingle()
+                    ->buttons([
+                        Button::make('excel'),
+                        Button::make('csv'),
+                        Button::make('pdf'),
+                        Button::make('print'),
+                        Button::make('reset'),
+                        Button::make('reload')
+                    ]);
     }
 
     /**
@@ -56,17 +68,15 @@ class CollectionsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('namaKoleksi'),
-            Column::make('namaPengarang'),
-            Column::make('jumlahKoleksi'),
+            Column::make('id'),
+            Column::make('transactionId'),
+            Column::make('collectionId'),
+            Column::make('status'),
             Column::computed('action')
-                ->title('Action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center')
-                ->orderable(false)
-                ->searchable(false)
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center')
         ];
     }
 
@@ -75,11 +85,6 @@ class CollectionsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Collections_' . date('YmdHis');
-    }
-
-    protected function getActionColumn($data): string {
-        $showUrl = route('koleksiView', $data->id);
-        return "<a class='waves-effect btn btn-success' data-value='$data->id'href='$showUrl'><a class = 'material-icons'>View</a>";
+        return 'DetailTransaction_' . date('YmdHis');
     }
 }

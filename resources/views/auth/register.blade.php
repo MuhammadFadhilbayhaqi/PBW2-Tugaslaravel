@@ -62,9 +62,9 @@
 
          <!-- Phone Number -->
          <div class="mt-4">
-            <x-input-label for="phoneNumber" :value="__('No Telepon')" />
-            <x-text-input id="phoneNumber" class="block mt-1 w-full" type="text" name="phoneNumber" :value="old('phoneNumber')" required autofocus />
-            <x-input-error :messages="$errors->get('phoneNumber')" class="mt-2" />
+            <x-input-label for="phonenumber" :value="__('No Telepon')" />
+            <x-text-input id="phonenumber" class="block mt-1 w-full" type="number" name="phonenumber" :value="old('phonenumber')" required autofocus />
+            <x-input-error :messages="$errors->get('phonenumber')" class="mt-2" />
         </div>
 
         <!-- Agama -->
@@ -74,20 +74,20 @@
             <x-input-error :messages="$errors->get('agama')" class="mt-2" />
         </div>
 
-        <!-- Gender -->
+        <!-- jenisKelamin -->
         <div class="mt-4">
-            <x-input-label :value="__('Jenis Kelamin')" for="gender" />
+            <x-input-label :value="__('Jenis Kelamin')" for="jenisKelamin" />
             <div class="mt-2">
                 <label class="inline-flex items-center">
-                    <input type="radio" name="gender" value="1" class="form-radio" {{ old('gender') === '1' ? 'checked' : '' }} required>
+                    <input type="radio" name="jenisKelamin" value="1" class="form-radio" {{ old('jenisKelamin') === '1' ? 'checked' : '' }} required>
                     <span class="mr-1 ml-1">Laki-laki</span>
                 </label>
                 <label class="inline-flex items-center">
-                    <input type="radio" name="gender" value="2" class="form-radio" {{ old('gender') === '2' ? 'checked' : '' }} required>
+                    <input type="radio" name="jenisKelamin" value="2" class="form-radio" {{ old('jenisKelamin') === '2' ? 'checked' : '' }} required>
                     <span class="ml-1">Perempuan</span>
                 </label>
             </div>
-            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+            <x-input-error :messages="$errors->get('jenisKelamin')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

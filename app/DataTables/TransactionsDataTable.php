@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Collection;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CollectionsDataTable extends DataTable
+class TransactionsDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -26,12 +26,13 @@ class CollectionsDataTable extends DataTable
             ->addColumn('action', function ($data) {
                 return $this->getActionColumn($data);
             });
+
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Collection $model): QueryBuilder
+    public function query(Transaction $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -42,7 +43,7 @@ class CollectionsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('collections-table')
+                    ->setTableId('transactions-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -56,11 +57,15 @@ class CollectionsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('namaKoleksi'),
-            Column::make('namaPengarang'),
-            Column::make('jumlahKoleksi'),
+            Column::make('id'),
+            Column::make('userIdPetugas')
+                ->title('Petugas'),
+            Column::make('userIdPeminjam')
+                ->title('Peminjam'),
+            Column::make('tanggalPinjam'),
+            Column::make('tanggalSelesai'),
             Column::computed('action')
-                ->title('Action')
+                ->title('Data Details')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
@@ -75,11 +80,12 @@ class CollectionsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Collections_' . date('YmdHis');
+        return 'Transactions_' . date('YmdHis');
     }
 
+    // Make an action button
     protected function getActionColumn($data): string {
-        $showUrl = route('koleksiView', $data->id);
-        return "<a class='waves-effect btn btn-success' data-value='$data->id'href='$showUrl'><a class = 'material-icons'>View</a>";
+        $showUrl = route('transaksiView', $data->id);
+        return "<a class='waves-effect btn btn-success' data-value='$data->id'href='$showUrl'><a class = 'material-icons'>Details</a>";
     }
 }

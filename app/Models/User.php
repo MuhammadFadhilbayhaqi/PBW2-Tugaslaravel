@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+// Muhammad FAdhil Bayhaqi_6706223102
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,7 +27,7 @@ class User extends Authenticatable
         'phonenumber',
         'birthdate',
         'agama',
-        'jenisKelamin',
+        'jenisKelamin'
     ];
 
     /**
